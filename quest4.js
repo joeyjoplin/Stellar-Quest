@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 // quest4.js
+// Manage offers - create an offer to buy or sell a specific asset for another
+
 import StellarSdk from '@stellar/stellar-sdk';
 const { Keypair, Horizon, TransactionBuilder, Networks, Operation, Asset } = StellarSdk;
 

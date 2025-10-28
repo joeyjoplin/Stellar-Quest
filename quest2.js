@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 // quest2.js
+// Payment - send an amount of a specific asset to a destination account
+
 import StellarSdk from '@stellar/stellar-sdk';
 const { Keypair, Horizon, TransactionBuilder, Networks, Operation, Asset } = StellarSdk;
 

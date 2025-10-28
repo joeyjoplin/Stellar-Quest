@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 // quest5.js
+// Path payments - send or receive an asset that is different from the received or sent asset
+
 import StellarSdk from '@stellar/stellar-sdk';
 const { Keypair, Horizon, TransactionBuilder, Networks, Operation, Asset } = StellarSdk;
 

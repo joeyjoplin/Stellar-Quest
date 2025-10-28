@@ -1,20 +1,21 @@
 // SPDX-License-Identifier: MIT
-// quest3.js
-// Change trust - create a trustline between two accounts for a designed asset
+// quest6.js
+// Account merge - Delete an account by transfering its XLM balance to another account
+
 import StellarSdk from '@stellar/stellar-sdk';
 const { Keypair, Horizon, TransactionBuilder, Networks, Operation, Asset } = StellarSdk;
 
-const questKeypair = Keypair.fromSecret('INPUT SECRET_KEY');
-const issuerKeypair = Keypair.random();
+const questKeypair = Keypair.fromSecret('SBRTUNDI6H52VO4JXHBNFGB2TR5W6ENR6EORS4IN3FMJTF4FTEQZRNJK');
+const destinationKeypair = Keypair.random();
 
-async function friendbotFund(addr) {    
+async function friendbotFund(addr) {
   const res = await fetch(`https://friendbot.stellar.org?addr=${addr}`);
   if (!res.ok) throw new Error(`Friendbot failed for ${addr}: ${res.status} - ${await res.text()}`);
   console.log('✅ Funded:', addr);
 }
 
-//await friendbotFund(questKeypair.publicKey());
-await friendbotFund(issuerKeypair.publicKey());
+await friendbotFund(questKeypair.publicKey());
+await friendbotFund(destinationKeypair.publicKey());
 
 // ⬇️ Use Horizon.Server (not Server)
 const server = new Horizon.Server('https://horizon-testnet.stellar.org');
@@ -22,17 +23,12 @@ const server = new Horizon.Server('https://horizon-testnet.stellar.org');
 const questAccount = await server.loadAccount(questKeypair.publicKey());
 const fee = await server.fetchBaseFee();
 
-//create asset
-const santaAsset = new Asset("SANTA",issuerKeypair.publicKey());
-
 const tx = new TransactionBuilder(questAccount, {
   fee: fee.toString(),
   networkPassphrase: Networks.TESTNET,
 })
-  .addOperation(Operation.changeTrust({
-    asset: santaAsset,
-    limit: "100",
-    source: questKeypair.publicKey() 
+  .addOperation(Operation.accountMerge({
+    destination: destinationKeypair.publicKey()
   }))
   .setTimeout(30)
   .build();
