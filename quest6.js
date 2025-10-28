@@ -5,7 +5,7 @@
 import StellarSdk from '@stellar/stellar-sdk';
 const { Keypair, Horizon, TransactionBuilder, Networks, Operation, Asset } = StellarSdk;
 
-const questKeypair = Keypair.fromSecret('SBRTUNDI6H52VO4JXHBNFGB2TR5W6ENR6EORS4IN3FMJTF4FTEQZRNJK');
+const questKeypair = Keypair.fromSecret('SECRET_KEY');
 const destinationKeypair = Keypair.random();
 
 async function friendbotFund(addr) {
